@@ -1,11 +1,630 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090a0d"><title>GAI LEE MARTIAL ARTS</title><link rel="stylesheet" href="styles.css"></head><body>
-<header class="top"><a class="brand" href="#home"><img src="assets/association-logo.jpg" alt="Association logo"><span><small>DISCIPLINE • STRENGTH • HONOUR</small><b>GAI LEE <em>MARTIAL ARTS</em></b></span></a><nav><a href="#home">Home</a><a href="#classes">Classes</a><a href="#reports">Reports</a><a href="#about">About</a></nav><button class="btn outline" id="adminOpen">⚙ Admin</button></header>
-<main id="home" class="wrap"><section class="hero"><div><p class="eyebrow">OFFICIAL TRAINING & ATTENDANCE PORTAL</p><h1>FORGE YOUR<br><em>STRENGTH.</em><br>MASTER YOUR<br>DISCIPLINE.</h1><p class="lead">வீரமே எங்கள் அடையாளம்!
-ஒழுக்கமே எங்கள் வழிகாட்டி!
-தன்னம்பிக்கையே எங்கள் வெற்றி.</p><a class="btn red" href="#classes">TAKE ATTENDANCE ↘</a><blockquote>“Discipline is choosing what you want most over what you want now.”</blockquote></div><div class="hero-logo"><img src="assets/TIGER.Jpg" alt="Gai Lee Silambam emblem"><span>COURAGE · MIND · BODY · SPIRIT</span></div></section>
-<section class="stats"><div><small>TOTAL STUDENTS</small><strong id="totalStudents">0</strong></div><div><small>PRESENT TODAY</small><strong id="todayPresent">0</strong></div><div><small>TODAY'S ATTENDANCE</small><strong id="todayRate">—%</strong></div><div><small>FEES PAID THIS MONTH</small><strong id="feesPaidCount">0</strong></div></section>
-<section id="classes" class="section"><div class="section-title"><div><small>CHOOSE YOUR DISCIPLINE</small><h2>GAI LEE <em> CLASSES.</em></h2><p>Select a class to view only its students.</p></div><label>ATTENDANCE DATE<input type="date" id="attendanceDate"></label></div><div id="classGrid" class="class-grid"></div></section>
-<section id="attendancePanel" class="section panel" hidden><div class="section-title"><div><small>DAILY ROLL CALL</small><h2 id="selectedTitle">Attendance</h2><p>Mark each student present or absent.</p></div><button class="btn outline" id="backClasses">← ALL CLASSES</button></div><div class="toolbar"><input id="studentSearch" type="search" placeholder="Search student name…"><span>🟢 Present &nbsp; 🔴 Absent</span></div><div class="mini-stats"><span>Students <b id="batchCount">0</b></span><span>Present <b id="batchPresent">0</b></span><span>Absent <b id="batchAbsent">0</b></span><button class="btn red" id="saveAttendance">SAVE ATTENDANCE ✓</button></div><div id="studentList" class="student-list"></div><div id="emptyBatch" class="empty" hidden>No students in this class yet. Admin can add students.</div></section>
-<section id="reports" class="section"><div class="section-title"><div><small>TRACK EVERY STEP FORWARD</small><h2>MONTHLY <em>REPORTS.</em></h2><p>Attendance and monthly fee status for each student.</p></div><label>SELECT MONTH<input type="month" id="reportMonth"></label></div><div class="report-card"><div class="toolbar"><button class="btn outline" id="refreshReport">REFRESH ↻</button><button class="btn outline" id="exportCsv">EXPORT CSV ↓</button></div><div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>CLASS / BATCH</th><th>PRESENT</th><th>ABSENT</th><th>ATTENDANCE</th><th>MONTHLY FEE</th></tr></thead><tbody id="reportBody"></tbody></table></div><p id="reportSummary" class="muted">No student records yet.</p></div></section>
-<section id="about" class="section"><div class="section-title"><div><small>OUR VALUES · OUR LEADERS</small><h2>BUILT ON <em>HONOUR.</em></h2></div></div><div class="about-grid"><article class="quote"><h3>THE WAY OF THE WARRIOR</h3><p>“A champion is not made in the ring alone. A champion is built every day through discipline, humility, courage and the will to rise again.”</p><small>TRAIN WITH PURPOSE. LIVE WITH HONOUR.</small></article><article class="leaders"><p><small>PRESIDENT</small><b>H. RENUGOPAL [EX. BSF]</b></p><p><small>VICE PRESIDENT</small><b>R. GAYATHRI RENUGOPAL</b></p><p><small>INSTRUCTOR</small><b>KAVIRAM [GAI LEE]</b></p></article></div><div class="academy-logos"><article><img src="assets/association-logo.jpg"><b>GAI LEE MARTIAL ARTS ASSOCIATION OF INDIA</b></article><article><img src="assets/silambam-logo.jpg"><b>GAI LEE SILAMBAM ACADEMY</b></article><article><img src="assets/sports-association-logo.jpg"><b>G3 BOXING ACADEMY</b></article><article><img src="assets/SOUTH INDIAN.Jpg"><b>SOUTH INDIAN TRADITIONAL SILAMBAM SPORTS ASSOCIATION</b></article><article><img src="assets/archery-logo.png"><b>GAI LEE ARCHERY ACADEMY</b></article></div></section><footer>© GAI LEE MARTIAL ARTS · DISCIPLINE IN TRAINING. HONOUR IN LIFE.</footer></main>
-<div id="adminModal" class="backdrop" hidden><section class="modal"><button class="close" id="adminClose">×</button><small>ADMINISTRATION</small><h2>ADMIN <em>CONTROL.</em></h2><div id="loginView"><p>Sign in to manage student records.</p><form id="loginForm"><label>ADMIN PIN<input type="password" id="adminPin" required placeholder="Enter admin PIN"></label><button class="btn red full">UNLOCK PANEL →</button><small>First-time PIN: 1234 (change it in Settings).</small><p id="loginError" class="error" hidden>Incorrect PIN.</p></form></div><div id="adminView" hidden><div class="tabs"><button class="tab active" data-tab="addPane">Add student</button><button class="tab" data-tab="managePane">Manage students</button><button class="tab" data-tab="feesPane">Monthly fees</button><button class="tab" data-tab="settingsPane">Settings</button></div><div id="addPane" class="pane"><form id="addForm"><label>STUDENT NAME<input id="newName" maxlength="80" required placeholder="Student full name"></label><label>CLASS / BATCH<select id="newBatch" required></select></label><button class="btn red full">＋ ADD STUDENT</button><p id="addSuccess" class="success" hidden>Student added successfully.</p></form></div><div id="managePane" class="pane" hidden><div id="manageList" class="manage-list"></div></div><div id="feesPane" class="pane" hidden><p>Choose a month, then mark each student's fee Paid or Unpaid. Status is saved separately for each month.</p><label>FEE MONTH<input type="month" id="feeMonth"></label><div id="feeAdminList" class="manage-list"></div></div><div id="settingsPane" class="pane" hidden><label>CHANGE ADMIN PIN<input id="newPin" type="password" minlength="4" maxlength="12" placeholder="4–12 characters"></label><button class="btn red full" id="saveSettings" type="button">SAVE SETTINGS</button><button class="btn outline full" id="logout" type="button">LOCK ADMIN PANEL</button></div><p class="muted">Records are saved in this browser on this device only.</p></div></section></div><div id="toast" class="toast"></div><script src="app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#090a0d">
+
+    <title>GAI LEE MARTIAL ARTS</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header class="top">
+
+    <a class="brand" href="#home">
+        <img src="association-logo.jpg" alt="Association Logo">
+
+        <span>
+            <small>DISCIPLINE • STRENGTH • HONOUR</small>
+            <b>GAI LEE <em>MARTIAL ARTS</em></b>
+        </span>
+    </a>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#classes">Classes</a>
+        <a href="#reports">Reports</a>
+        <a href="#about">About</a>
+    </nav>
+
+    <button class="btn outline" id="adminOpen">
+        ⚙ Admin
+    </button>
+
+</header>
+
+
+<main id="home" class="wrap">
+
+    <!-- HERO SECTION -->
+
+    <section class="hero">
+
+        <div>
+            <p class="eyebrow">
+                OFFICIAL TRAINING & ATTENDANCE PORTAL
+            </p>
+
+            <h1>
+                FORGE YOUR<br>
+                <em>STRENGTH.</em><br>
+                MASTER YOUR<br>
+                DISCIPLINE.
+            </h1>
+
+            <p class="lead">
+                வீரமே எங்கள் அடையாளம்!<br>
+                ஒழுக்கமே எங்கள் வழிகாட்டி!<br>
+                தன்னம்பிக்கையே எங்கள் வெற்றி.
+            </p>
+
+            <a class="btn red" href="#classes">
+                TAKE ATTENDANCE ↘
+            </a>
+
+            <blockquote>
+                “Discipline is choosing what you want most
+                over what you want now.”
+            </blockquote>
+        </div>
+
+        <div class="hero-logo">
+
+            <img
+                src="silambam-logo.jpg"
+                alt="Gai Lee Silambam Emblem"
+            >
+
+            <span>
+                COURAGE · MIND · BODY · SPIRIT
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- STATISTICS -->
+
+    <section class="stats">
+
+        <div>
+            <small>TOTAL STUDENTS</small>
+            <strong id="totalStudents">0</strong>
+        </div>
+
+        <div>
+            <small>PRESENT TODAY</small>
+            <strong id="todayPresent">0</strong>
+        </div>
+
+        <div>
+            <small>TODAY'S ATTENDANCE</small>
+            <strong id="todayRate">—%</strong>
+        </div>
+
+        <div>
+            <small>FEES PAID THIS MONTH</small>
+            <strong id="feesPaidCount">0</strong>
+        </div>
+
+    </section>
+
+
+    <!-- CLASSES -->
+
+    <section id="classes" class="section">
+
+        <div class="section-title">
+
+            <div>
+                <small>CHOOSE YOUR DISCIPLINE</small>
+
+                <h2>
+                    GAI LEE <em>CLASSES.</em>
+                </h2>
+
+                <p>
+                    Select a class to view only its students.
+                </p>
+            </div>
+
+            <label>
+                ATTENDANCE DATE
+                <input type="date" id="attendanceDate">
+            </label>
+
+        </div>
+
+        <div id="classGrid" class="class-grid"></div>
+
+    </section>
+
+
+    <!-- ATTENDANCE PANEL -->
+
+    <section
+        id="attendancePanel"
+        class="section panel"
+        hidden
+    >
+
+        <div class="section-title">
+
+            <div>
+                <small>DAILY ROLL CALL</small>
+
+                <h2 id="selectedTitle">Attendance</h2>
+
+                <p>
+                    Mark each student present or absent.
+                </p>
+            </div>
+
+            <button class="btn outline" id="backClasses">
+                ← ALL CLASSES
+            </button>
+
+        </div>
+
+        <div class="toolbar">
+
+            <input
+                id="studentSearch"
+                type="search"
+                placeholder="Search student name…"
+            >
+
+            <span>
+                🟢 Present &nbsp; 🔴 Absent
+            </span>
+
+        </div>
+
+        <div class="mini-stats">
+
+            <span>
+                Students <b id="batchCount">0</b>
+            </span>
+
+            <span>
+                Present <b id="batchPresent">0</b>
+            </span>
+
+            <span>
+                Absent <b id="batchAbsent">0</b>
+            </span>
+
+            <button class="btn red" id="saveAttendance">
+                SAVE ATTENDANCE ✓
+            </button>
+
+        </div>
+
+        <div id="studentList" class="student-list"></div>
+
+        <div id="emptyBatch" class="empty" hidden>
+            No students in this class yet.
+            Admin can add students.
+        </div>
+
+    </section>
+
+
+    <!-- MONTHLY REPORTS -->
+
+    <section id="reports" class="section">
+
+        <div class="section-title">
+
+            <div>
+                <small>TRACK EVERY STEP FORWARD</small>
+
+                <h2>
+                    MONTHLY <em>REPORTS.</em>
+                </h2>
+
+                <p>
+                    Attendance and monthly fee status for each student.
+                </p>
+            </div>
+
+            <label>
+                SELECT MONTH
+                <input type="month" id="reportMonth">
+            </label>
+
+        </div>
+
+        <div class="report-card">
+
+            <div class="toolbar">
+
+                <button class="btn outline" id="refreshReport">
+                    REFRESH ↻
+                </button>
+
+                <button class="btn outline" id="exportCsv">
+                    EXPORT CSV ↓
+                </button>
+
+            </div>
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>STUDENT</th>
+                            <th>CLASS / BATCH</th>
+                            <th>PRESENT</th>
+                            <th>ABSENT</th>
+                            <th>ATTENDANCE</th>
+                            <th>MONTHLY FEE</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="reportBody"></tbody>
+
+                </table>
+
+            </div>
+
+            <p id="reportSummary" class="muted">
+                No student records yet.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABOUT THE ACADEMY -->
+
+    <section id="about" class="section">
+
+        <div class="section-title">
+
+            <div>
+                <small>OUR VALUES · OUR LEADERS</small>
+
+                <h2>
+                    BUILT ON <em>HONOUR.</em>
+                </h2>
+            </div>
+
+        </div>
+
+        <div class="about-grid">
+
+            <article class="quote">
+
+                <h3>THE WAY OF THE WARRIOR</h3>
+
+                <p>
+                    “A champion is not made in the ring alone.
+                    A champion is built every day through discipline,
+                    humility, courage and the will to rise again.”
+                </p>
+
+                <small>
+                    TRAIN WITH PURPOSE. LIVE WITH HONOUR.
+                </small>
+
+            </article>
+
+            <article class="leaders">
+
+                <p>
+                    <small>PRESIDENT</small>
+                    <b>H. RENUGOPAL [EX. BSF]</b>
+                </p>
+
+                <p>
+                    <small>VICE PRESIDENT</small>
+                    <b>R. GAYATHRI RENUGOPAL</b>
+                </p>
+
+                <p>
+                    <small>INSTRUCTOR</small>
+                    <b>KAVIRAM [GAI LEE]</b>
+                </p>
+
+            </article>
+
+        </div>
+
+
+        <!-- ACADEMY LOGOS -->
+
+        <div class="academy-logos">
+
+            <article>
+                <img
+                    src="association-logo.jpg"
+                    alt="Gai Lee Martial Arts Association"
+                >
+
+                <b>
+                    GAI LEE MARTIAL ARTS ASSOCIATION OF INDIA
+                </b>
+            </article>
+
+            <article>
+                <img
+                    src="silambam-logo.jpg"
+                    alt="Gai Lee Silambam Academy"
+                >
+
+                <b>
+                    GAI LEE SILAMBAM ACADEMY
+                </b>
+            </article>
+
+            <article>
+                <img
+                    src="sports-association-logo.jpg"
+                    alt="G3 Boxing Academy"
+                >
+
+                <b>
+                    G3 BOXING ACADEMY
+                </b>
+            </article>
+
+            <article>
+                <img
+                    src="SOUTH INDIAN.jpg"
+                    alt="South Indian Traditional Silambam Sports Association"
+                >
+
+                <b>
+                    SOUTH INDIAN TRADITIONAL SILAMBAM SPORTS ASSOCIATION
+                </b>
+            </article>
+
+            <article>
+                <img
+                    src="archery-logo.png"
+                    alt="Gai Lee Archery Academy"
+                >
+
+                <b>
+                    GAI LEE ARCHERY ACADEMY
+                </b>
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+        © GAI LEE MARTIAL ARTS ·
+        DISCIPLINE IN TRAINING. HONOUR IN LIFE.
+    </footer>
+
+</main>
+
+
+<!-- ADMIN LOGIN MODAL -->
+
+<div id="adminModal" class="backdrop" hidden>
+
+    <section class="modal">
+
+        <button class="close" id="adminClose">
+            ×
+        </button>
+
+        <small>ADMINISTRATION</small>
+
+        <h2>
+            ADMIN <em>CONTROL.</em>
+        </h2>
+
+
+        <!-- LOGIN -->
+
+        <div id="loginView">
+
+            <p>
+                Sign in to manage student records.
+            </p>
+
+            <form id="loginForm">
+
+                <label>
+                    ADMIN PIN
+
+                    <input
+                        type="password"
+                        id="adminPin"
+                        required
+                        placeholder="Enter admin PIN"
+                    >
+                </label>
+
+                <button class="btn red full">
+                    UNLOCK PANEL →
+                </button>
+
+                <small>
+                    First-time PIN: 1234
+                    (change it in Settings).
+                </small>
+
+                <p id="loginError" class="error" hidden>
+                    Incorrect PIN.
+                </p>
+
+            </form>
+
+        </div>
+
+
+        <!-- ADMIN PANEL -->
+
+        <div id="adminView" hidden>
+
+            <div class="tabs">
+
+                <button
+                    class="tab active"
+                    data-tab="addPane"
+                >
+                    Add student
+                </button>
+
+                <button
+                    class="tab"
+                    data-tab="managePane"
+                >
+                    Manage students
+                </button>
+
+                <button
+                    class="tab"
+                    data-tab="feesPane"
+                >
+                    Monthly fees
+                </button>
+
+                <button
+                    class="tab"
+                    data-tab="settingsPane"
+                >
+                    Settings
+                </button>
+
+            </div>
+
+
+            <!-- ADD STUDENT -->
+
+            <div id="addPane" class="pane">
+
+                <form id="addForm">
+
+                    <label>
+                        STUDENT NAME
+
+                        <input
+                            id="newName"
+                            maxlength="80"
+                            required
+                            placeholder="Student full name"
+                        >
+                    </label>
+
+                    <label>
+                        CLASS / BATCH
+
+                        <select id="newBatch" required></select>
+                    </label>
+
+                    <button class="btn red full">
+                        ＋ ADD STUDENT
+                    </button>
+
+                    <p id="addSuccess" class="success" hidden>
+                        Student added successfully.
+                    </p>
+
+                </form>
+
+            </div>
+
+
+            <!-- MANAGE STUDENTS -->
+
+            <div id="managePane" class="pane" hidden>
+
+                <div id="manageList" class="manage-list"></div>
+
+            </div>
+
+
+            <!-- MONTHLY FEES -->
+
+            <div id="feesPane" class="pane" hidden>
+
+                <p>
+                    Choose a month, then mark each student's fee
+                    Paid or Unpaid. Status is saved separately
+                    for each month.
+                </p>
+
+                <label>
+                    FEE MONTH
+
+                    <input type="month" id="feeMonth">
+                </label>
+
+                <div id="feeAdminList" class="manage-list"></div>
+
+            </div>
+
+
+            <!-- SETTINGS -->
+
+            <div id="settingsPane" class="pane" hidden>
+
+                <label>
+                    CHANGE ADMIN PIN
+
+                    <input
+                        id="newPin"
+                        type="password"
+                        minlength="4"
+                        maxlength="12"
+                        placeholder="4–12 characters"
+                    >
+                </label>
+
+                <button
+                    class="btn red full"
+                    id="saveSettings"
+                    type="button"
+                >
+                    SAVE SETTINGS
+                </button>
+
+                <button
+                    class="btn outline full"
+                    id="logout"
+                    type="button"
+                >
+                    LOCK ADMIN PANEL
+                </button>
+
+            </div>
+
+            <p class="muted">
+                Records are saved in this browser on this device only.
+            </p>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- NOTIFICATION -->
+
+<div id="toast" class="toast"></div>
+
+
+<!-- JAVASCRIPT -->
+
+<script src="app.js"></script>
+
+</body>
+</html>
