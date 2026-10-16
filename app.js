@@ -1,11 +1,11 @@
 (() => {
 'use strict';
 const CLASSES = [
- {id:'association',name:'FIRST BATCH',logo:'assets/FIRST.jpg'},
- {id:'silambam',name:'SECOND BATCH',logo:'assets/SECOND.jpg'},
- {id:'sports',name:'MORNING BATCH',logo:'assets/MORNING.jpg'},
- {id:'boxing',name:'SAT & SUN BATCH',logo:'assets/SAT&SUN.jpg'},
- {id:'archery',name:'PARANIPUTHUR CLASS',logo:'assets/PARANIPUTHUR.jpg'},
+ {id:'association',name:'FIRST BATCH',logo:'FIRST.jpg'},
+ {id:'silambam',name:'SECOND BATCH',logo:'SECOND.jpg'},
+ {id:'sports',name:'MORNING BATCH',logo:'MORNING.jpg'},
+ {id:'boxing',name:'SAT & SUN BATCH',logo:'SAT%26SUN.jpg'},
+ {id:'archery',name:'PARANIPUTHUR CLASS',logo:'PARANIPUTHUR.jpg'},
 ];
 const $ = id => document.getElementById(id);
 const today = new Date();
