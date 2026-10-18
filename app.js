@@ -49,11 +49,10 @@ $('exportCsv').addEventListener('click',()=>{const month=$('reportMonth').value|
 
   backupButton.onclick = function () {
     const backup = {
-      students: localStorage.getItem('gaiLeeStudents') || '[]',
-      attendance: localStorage.getItem('gaiLeeAttendance') || '{}',
-      fees: localStorage.getItem('gaiLeeFees') || '{}',
-      pin: localStorage.getItem('gaiLeePin') || '1234'
-    };
+  students: JSON.parse(localStorage.getItem('gaiLeeStudents') || '[]'),
+  attendance: JSON.parse(localStorage.getItem('gaiLeeAttendance') || '{}'),
+  fees: JSON.parse(localStorage.getItem('gaiLeeFees') || '{}')
+};
 
     const file = new Blob(
       [JSON.stringify(backup, null, 2)],
