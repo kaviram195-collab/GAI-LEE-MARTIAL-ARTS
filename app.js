@@ -39,5 +39,40 @@ $('addForm').addEventListener('submit',e=>{e.preventDefault();const name=$('newN
 $('saveSettings').addEventListener('click',()=>{const next=$('newPin').value.trim();if(next){if(next.length<4||next.length>12){toast('PIN must be 4–12 characters.');return}pin=next;localStorage.setItem('gaiLeePin',pin);$('newPin').value=''}toast('Settings saved.')});$('logout').addEventListener('click',()=>{isAdmin=false;showAdmin();toast('Admin panel locked.')});
 $('attendanceDate').addEventListener('change',()=>{renderStats();if(activeClass)renderStudentRoll()});$('studentSearch').addEventListener('input',renderStudentRoll);$('saveAttendance').addEventListener('click',()=>{saveAll();toast('Attendance saved for '+($('attendanceDate').value||dateString(today))+'.');renderStats();renderReports()});$('backClasses').addEventListener('click',()=>{$('attendancePanel').hidden=true;activeClass=null;$('classes').scrollIntoView({behavior:'smooth'})});$('reportMonth').addEventListener('change',renderReports);$('feeMonth').addEventListener('change',renderFeesAdmin);$('refreshReport').addEventListener('click',()=>{renderReports();toast('Reports refreshed.')});
 $('exportCsv').addEventListener('click',()=>{const month=$('reportMonth').value||monthString(today);const rows=[['Student','Class / Batch','Month','Present','Absent','Recorded days','Attendance %','Monthly fee status']];students.forEach(s=>{const rec=Object.entries(attendance).filter(([d,v])=>d.startsWith(month)&&v[s.id]);const p=rec.filter(([,v])=>v[s.id]==='present').length,a=rec.filter(([,v])=>v[s.id]==='absent').length,total=p+a;rows.push([s.name,CLASSES.find(c=>c.id===s.classId)?.name||'',month,p,a,total,total?Math.round(p/total*100):0,feeStatus(s.id,month).toUpperCase()])});const csv=rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`gai-lee-report-${month}.csv`;a.click();URL.revokeObjectURL(url)});
-init();
+// TEMPORARY BACKUP BUTTON
+  const backupButton = document.createElement('button');
+  backupButton.textContent = 'BACKUP MY DATA';
+  backupButton.style.cssText =
+    'position:fixed;bottom:20px;right:15px;z-index:99999;' +
+    'padding:14px;background:#d4af37;color:#000;' +
+    'font-weight:bold;border:2px solid #000;border-radius:10px;';
+
+  backupButton.onclick = function () {
+    const backup = {
+      students: localStorage.getItem('gaiLeeStudents') || '[]',
+      attendance: localStorage.getItem('gaiLeeAttendance') || '{}',
+      fees: localStorage.getItem('gaiLeeFees') || '{}',
+      pin: localStorage.getItem('gaiLeePin') || '1234'
+    };
+
+    const file = new Blob(
+      [JSON.stringify(backup, null, 2)],
+      { type: 'application/json' }
+    );
+
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(file);
+    link.download = 'GAI-LEE-BACKUP.json';
+    link.click();
+
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    alert('Backup downloaded. Keep this file safe!');
+  };
+
+  document.body.appendChild(backupButton);
+ 
+ init();
 })();
+
+
+
