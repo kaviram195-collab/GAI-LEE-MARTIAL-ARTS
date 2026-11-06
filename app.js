@@ -6,7 +6,6 @@ const CLASSES = [
  {id:'sports',name:'MORNING BATCH',logo:'MORNING.jpg'},
  {id:'boxing',name:'SAT & SUN BATCH',logo:'SAT%26SUN.jpg'},
  {id:'archery',name:'PARANIPUTHUR CLASS',logo:'PARANIPUTHUR.jpg'},
- {id:'karate',name:'TUES & THURS MOR BATCH',logo:'TUES MOR.JPG'}'
 ];
 const $ = id => document.getElementById(id);
 const today = new Date();
